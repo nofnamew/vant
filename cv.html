@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V.A.N.T - Önéletrajz készítése</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav>
+        <div class="logo"><span>V</span>.A.N.T</div>
+        <div class="nav-links">
+            <a href="index.html">Állások</a>
+            <a href="cv.html" class="active">Önéletrajz</a>
+            <a href="kedvencek.html">Kedvencek</a>
+        </div>
+        <div class="nav-actions">
+            <button class="btn-outline">Bejelentkezés</button>
+            <button class="btn-primary">Regisztráció</button>
+        </div>
+    </nav>
+
+    <main class="cv-container">
+        <!-- Bal oldali navigáció -->
+        <aside class="cv-sidebar">
+            <h2>Önéletrajz készítése</h2>
+            <p style="font-size: 13px; color: var(--gray); margin-bottom: 24px;">Töltsd ki az adatokat, és készítsd el a profi önéletrajzodat néhány lépésben!</p>
+            
+            <ul class="step-list">
+                <li class="active" onclick="showStep(1)"><span>1</span> Személyes adatok</li>
+                <li onclick="showStep(2)"><span>2</span> Tapasztalatok</li>
+                <li onclick="showStep(3)"><span>3</span> Tanulmányok</li>
+                <li onclick="showStep(4)"><span>4</span> Készségek</li>
+            </ul>
+
+           
+        </aside>
+
+        <!-- Középső űrlap -->
+        <section class="cv-form-area">
+            
+            <!-- 1. Lépés: Személyes adatok -->
+            <div id="step-1" class="cv-step active">
+                <h3>Személyes adatok</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Név</label>
+                        <input type="text" id="cv-name" oninput="updatePreview()" placeholder="Kovács Bence">
+                    </div>
+                    <div class="form-group">
+                        <label>E-mail cím</label>
+                        <input type="email" id="cv-email" oninput="updatePreview()" placeholder="bence.kovacs@email.hu">
+                    </div>
+                    <div class="form-group">
+                        <label>Telefonszám</label>
+                        <input type="text" id="cv-phone" oninput="updatePreview()" placeholder="+36 30 123 4567">
+                    </div>
+                    <div class="form-group">
+                        <label>Lakhely</label>
+                        <input type="text" id="cv-location" oninput="updatePreview()" placeholder="Miskolcza">
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Rövid bemutatkozás</label>
+                        <textarea id="cv-bio" oninput="updatePreview()" rows="3" placeholder="Mutatók, precíz és problémamegoldó szemlélet..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Lépés: Tapasztalatok -->
+            <div id="step-2" class="cv-step">
+                <h3>Munkatapasztalat</h3>
+                <div class="form-group">
+                    <label>Cég neve</label>
+                    <input type="text" id="cv-company" oninput="updatePreview()" placeholder="Tech Solutions Kft.">
+                </div>
+                <div class="form-group">
+                    <label>Pozíció</label>
+                    <input type="text" id="cv-position" oninput="updatePreview()" placeholder="Junior Fejlesztő">
+                </div>
+                <div class="form-group">
+                    <label>Időtartam</label>
+                    <input type="text" id="cv-period" oninput="updatePreview()" placeholder="2022 - 2024">
+                </div>
+            </div>
+
+            <!-- 3. Lépés: Tanulmányok -->
+            <div id="step-3" class="cv-step">
+                <h3>Tanulmányok</h3>
+                <div class="form-group">
+                    <label>Iskola neve</label>
+                    <input type="text" id="cv-school" oninput="updatePreview()" placeholder="Miskolci Egyetem">
+                </div>
+                <div class="form-group">
+                    <label>Szak</label>
+                    <input type="text" id="cv-degree" oninput="updatePreview()" placeholder="Programtervező informatikus">
+                </div>
+            </div>
+
+            <!-- 4. Lépés: Készségek -->
+            <div id="step-4" class="cv-step">
+                <h3>Készségek</h3>
+                <div class="form-group">
+                    <label>Készségek (vesszővel elválasztva)</label>
+                    <input type="text" id="cv-skills" oninput="updatePreview()" placeholder="HTML, CSS, JavaScript, Python">
+                </div>
+            </div>
+
+            <div class="cv-actions">
+    <button class="btn-outline" onclick="prevStep()">Vissza</button>
+    <button class="btn-primary" onclick="nextStep()">Tovább</button>
+</div>
+<!-- Adj hozzá egy külön mentés gombot az űrlap aljára -->
+<div style="margin-top: 20px; text-align: right;">
+    <button class="btn-primary" onclick="saveResumeToSupabase()">Önéletrajz mentése</button>
+</div>
+        </section>
+
+        <!-- Jobb oldali élő előnézet -->
+        <aside class="cv-preview">
+            <div class="preview-header">
+                <h4>Élő előnézet</h4>
+                <span style="font-size: 12px; color: var(--gray);">Modern</span>
+            </div>
+            <div class="preview-paper" id="cv-preview-content">
+                <div class="preview-profile">
+                    <div class="preview-avatar">👤</div>
+                    <div>
+                        <h3 id="preview-name">Kovács Bence</h3>
+                        <p id="preview-email">bence.kovacs@email.hu</p>
+                        <p id="preview-phone">+36 30 123 4567</p>
+                        <p id="preview-location">Miskolcza</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="preview-section">
+                    <h4>Rövid bemutatkozás</h4>
+                    <p id="preview-bio">Mutatók, precíz és problémamegoldó szemlélet...</p>
+                </div>
+                <div class="preview-section">
+                    <h4>Munkatapasztalat</h4>
+                    <p><strong id="preview-position">Junior Fejlesztő</strong> - <span id="preview-company">Tech Solutions Kft.</span></p>
+                    <p style="font-size: 12px; color: var(--gray);" id="preview-period">2022 - 2024</p>
+                </div>
+                <div class="preview-section">
+                    <h4>Tanulmányok</h4>
+                    <p><strong id="preview-school">Miskolci Egyetem</strong></p>
+                    <p style="font-size: 12px; color: var(--gray);" id="preview-degree">Programtervező informatikus</p>
+                </div>
+                <div class="preview-section">
+                    <h4>Készségek</h4>
+                    <p id="preview-skills">HTML, CSS, JavaScript, Python</p>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- 1. Először a Supabase könyvtár (CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- 2. Utána a saját app.js-ed -->
+<script src="app.js"></script>
+</body>
+</html>

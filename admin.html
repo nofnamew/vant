@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V.A.N.T - Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav>
+        <div class="logo"><span>V</span>.A.N.T Admin</div>
+        <div class="nav-actions">
+            <span id="user-email" style="font-size: 14px; margin-right: 10px;"></span>
+            <button class="btn-outline" onclick="signOut()">Kijelentkezés</button>
+        </div>
+    </nav>
+
+    <main class="main-container" style="justify-content: center; max-width: 800px; margin-top: 40px;">
+        
+        <!-- Bejelentkezési űrlap (ha nincs bejelentkezve) -->
+        <div id="login-section" style="width: 100%; max-width: 400px; background: #fff; padding: 30px; border-radius: 12px; border: 1px solid var(--border); display: none;">
+            <h2 style="margin-bottom: 20px; text-align: center;">Admin Bejelentkezés</h2>
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label>Email</label>
+                <input type="email" id="admin-email" placeholder="admin@vant.hu">
+            </div>
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label>Jelszó</label>
+                <input type="password" id="admin-password" placeholder="••••••••">
+            </div>
+            <button class="btn-primary" style="width: 100%; padding: 12px;" onclick="signIn()">Bejelentkezés</button>
+            <p id="login-error" style="color: red; font-size: 14px; margin-top: 10px; text-align: center;"></p>
+        </div>
+
+        <!-- Új állás felvitele (ha be van jelentkezve) -->
+        <div id="admin-section" style="width: 100%; background: #fff; padding: 30px; border-radius: 12px; border: 1px solid var(--border); display: none;">
+            <h2 style="margin-bottom: 20px;">Új állás felvitele</h2>
+            
+            <div class="form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div class="form-group"><label>Pozíció neve</label><input type="text" id="job-title" placeholder="Pl. Junior Fejlesztő"></div>
+                <div class="form-group"><label>Cég neve</label><input type="text" id="job-company" placeholder="Pl. Tech Kft."></div>
+                <div class="form-group"><label>Helyszín</label><input type="text" id="job-location" placeholder="Pl. Budapest"></div>
+                <div class="form-group"><label>Bér</label><input type="text" id="job-salary" placeholder="Pl. Br. 500 000 Ft / hó"></div>
+                <div class="form-group">
+                    <label>Munka típusa</label>
+                    <select id="job-type">
+                        <option value="Teljes munkaidő">Teljes munkaidő</option>
+                        <option value="Részmunkaidő">Részmunkaidő</option>
+                        <option value="Távmunka">Távmunka</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Tapasztalat</label>
+                    <select id="job-experience">
+                        <option value="Pályakezdő">Pályakezdő</option>
+                        <option value="1-3 év">1-3 év</option>
+                        <option value="3-5 év">3-5 év</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Logó (2 betű)</label><input type="text" id="job-logo" placeholder="Pl. TK" maxlength="2"></div>
+                <div class="form-group"><label>Logó színe</label><input type="color" id="job-color" value="#e11d48" style="height: 42px; padding: 5px;"></div>
+            </div>
+            
+            <button class="btn-primary" style="margin-top: 20px; padding: 12px 24px;" onclick="addJob()">Állás hozzáadása</button>
+            <p id="job-status" style="margin-top: 10px; font-weight: 600;"></p>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // UGYANAZOK A KULCSOK, MINT AZ APP.JS-BEN
+        const SUPABASE_URL = 'https://xxxxx.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIs...';
+        const { createClient } = supabase;
+        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Bejelentkezés állapot ellenőrzése
+        async function checkAuth() {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (session) {
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('admin-section').style.display = 'block';
+                document.getElementById('user-email').textContent = session.user.email;
+            } else {
+                document.getElementById('login-section').style.display = 'block';
+                document.getElementById('admin-section').style.display = 'none';
+            }
+        }
+
+        // Bejelentkezés
+        async function signIn() {
+            const email = document.getElementById('admin-email').value;
+            const password = document.getElementById('admin-password').value;
+            const errorEl = document.getElementById('login-error');
+            
+            const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+            if (error) {
+                errorEl.textContent = "Hiba: " + error.message;
+            } else {
+                errorEl.textContent = "";
+                checkAuth();
+            }
+        }
+
+        // Kijelentkezés
+        async function signOut() {
+            await supabaseClient.auth.signOut();
+            checkAuth();
+        }
+
+        // Új állás hozzáadása
+        async function addJob() {
+            const statusEl = document.getElementById('job-status');
+            const jobData = {
+                title: document.getElementById('job-title').value,
+                company: document.getElementById('job-company').value,
+                location: document.getElementById('job-location').value,
+                salary: document.getElementById('job-salary').value,
+                type: document.getElementById('job-type').value,
+                experience: document.getElementById('job-experience').value,
+                logo: document.getElementById('job-logo').value.toUpperCase(),
+                color: document.getElementById('job-color').value
+            };
+
+            if(!jobData.title || !jobData.company) {
+                statusEl.textContent = "Kérlek töltsd ki a kötelező mezőket (Pozíció, Cég)!";
+                statusEl.style.color = "red";
+                return;
+            }
+
+            const { error } = await supabaseClient.from('jobs').insert([jobData]);
+
+            if (error) {
+                statusEl.textContent = "Hiba: " + error.message;
+                statusEl.style.color = "red";
+            } else {
+                statusEl.textContent = "Sikeresen hozzáadva!";
+                statusEl.style.color = "green";
+                // Űrlap törlése
+                document.getElementById('job-title').value = '';
+                document.getElementById('job-company').value = '';
+                document.getElementById('job-location').value = '';
+                document.getElementById('job-salary').value = '';
+            }
+        }
+
+        // Induláskor ellenőrizzük a bejelentkezést
+        checkAuth();
+    </script>
+</body>
+</html>

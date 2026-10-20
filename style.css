@@ -1,0 +1,259 @@
+:root {
+    --primary: #e11d48;
+    --primary-hover: #be123c;
+    --dark: #111827;
+    --gray: #6b7280;
+    --light-bg: #f9fafb;
+    --border: #e5e7eb;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+body { background-color: var(--light-bg); color: var(--dark); line-height: 1.5; }
+
+/* --- NAVIGÁCIÓ --- */
+nav {
+    background: #fff; padding: 16px 40px; display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100;
+}
+.logo { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
+.logo span { color: var(--primary); }
+.nav-links { display: flex; gap: 24px; }
+.nav-links a { text-decoration: none; color: var(--gray); font-weight: 500; font-size: 15px; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--primary); }
+.nav-actions { display: flex; gap: 12px; align-items: center; }
+.btn-outline { padding: 8px 16px; border: 1px solid var(--border); border-radius: 8px; background: transparent; font-weight: 600; cursor: pointer; color: var(--dark); transition: background 0.2s; }
+.btn-outline:hover { background: var(--light-bg); }
+.btn-primary { padding: 8px 16px; border: none; border-radius: 8px; background: var(--primary); color: #fff; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+.btn-primary:hover { background: var(--primary-hover); }
+
+/* --- HERO SZEKCIÓ --- */
+.hero { 
+    background: #fff; 
+    padding: 60px 40px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    border-bottom: 1px solid var(--border); 
+    gap: 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+.hero-content { flex: 1; max-width: 700px; }
+.hero h1 { font-size: 48px; font-weight: 800; margin-bottom: 16px; letter-spacing: -1.5px; line-height: 1.1; }
+.hero p { font-size: 18px; color: var(--gray); margin-bottom: 32px; }
+
+/* Keresősáv javítása */
+.search-bar { 
+    display: flex; 
+    background: #fff; 
+    border: 1px solid var(--border); 
+    border-radius: 12px; 
+    padding: 8px; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+    width: 100%;
+    max-width: 650px;
+}
+.search-bar input { 
+    flex: 1; 
+    border: none; 
+    outline: none; 
+    padding: 12px 16px; 
+    font-size: 16px; 
+    min-width: 0;
+}
+.search-bar input:first-child { border-right: 1px solid var(--border); }
+.search-bar button { padding: 12px 24px; border-radius: 8px; font-size: 16px; white-space: nowrap; }
+
+/* Illusztráció javítása (nem lóg ki, rugalmas) */
+.hero-illustration { 
+    flex: 1; 
+    max-width: 450px; 
+    height: 300px; 
+    border-radius: 16px; 
+    overflow: hidden; 
+    background: #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray);
+    font-weight: 600;
+    font-size: 24px;
+}
+
+/* --- FŐ KONTÉNER (Rács javítása) --- */
+.main-container { 
+    display: flex; 
+    max-width: 1200px; 
+    margin: 40px auto; 
+    gap: 32px; 
+    padding: 0 20px; 
+    align-items: flex-start;
+}
+
+/* Bal oldali szűrők */
+.sidebar { width: 260px; flex-shrink: 0; }
+.filter-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.filter-card h3 { font-size: 16px; margin-bottom: 20px; }
+.filter-group { margin-bottom: 24px; }
+.filter-group h4 { font-size: 14px; font-weight: 600; margin-bottom: 12px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.5px; }
+.checkbox-label { display: flex; align-items: center; gap: 8px; font-size: 14px; margin-bottom: 10px; cursor: pointer; color: var(--dark); }
+.checkbox-label input { accent-color: var(--primary); width: 16px; height: 16px; cursor: pointer; }
+
+/* Középső álláslista */
+.jobs-list { flex: 1; min-width: 0; }
+.jobs-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.jobs-header h2 { font-size: 24px; font-weight: 700; }
+.jobs-header select { padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border); font-family: inherit; outline: none; }
+
+.job-card { 
+    background: #fff; 
+    border: 1px solid var(--border); 
+    border-radius: 12px; 
+    padding: 20px; 
+    margin-bottom: 16px; 
+    display: flex; 
+    gap: 16px; 
+    align-items: flex-start; 
+    transition: box-shadow 0.2s, border-color 0.2s; 
+}
+.job-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-color: #d1d5db; }
+.company-logo { width: 48px; height: 48px; border-radius: 12px; background: #f3f4f6; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; flex-shrink: 0; }
+.job-info { flex: 1; }
+.job-info h3 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.company { font-size: 14px; color: var(--gray); margin-bottom: 12px; }
+.tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.tag { background: #f3f4f6; color: var(--gray); font-size: 12px; padding: 4px 10px; border-radius: 6px; font-weight: 500; }
+.job-salary { font-size: 15px; font-weight: 600; color: var(--dark); }
+.bookmark-btn { background: none; border: none; cursor: pointer; color: var(--gray); font-size: 24px; transition: color 0.2s; padding: 0 8px; }
+.bookmark-btn:hover { color: var(--primary); }
+.bookmark-btn.saved { color: var(--primary); }
+
+/* Jobb oldali panel */
+.right-panel { width: 300px; flex-shrink: 0; }
+.resume-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 28px; text-align: left; border-top: 4px solid var(--primary); box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.resume-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+.resume-card p { font-size: 14px; color: var(--gray); margin-bottom: 24px; }
+.resume-card .btn-primary { display: block; width: 100%; text-align: center; text-decoration: none; padding: 12px; font-size: 16px; }
+
+.stats { margin-top: 32px; border-top: 1px solid var(--border); padding-top: 24px; }
+.stats h4 { font-size: 15px; font-weight: 700; margin-bottom: 16px; }
+.stat-item { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--gray); margin-bottom: 12px; }
+.stat-dot { width: 8px; height: 8px; background: var(--primary); border-radius: 50%; flex-shrink: 0; }
+
+/* --- CV OLDAL (Önéletrajz) --- */
+.cv-container { display: flex; max-width: 1300px; margin: 40px auto; gap: 32px; padding: 0 20px; align-items: flex-start; }
+.cv-sidebar { width: 240px; flex-shrink: 0; }
+.step-list { list-style: none; }
+.step-list li { padding: 12px 16px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 500; color: var(--gray); margin-bottom: 8px; transition: all 0.2s; border: 1px solid transparent; }
+.step-list li:hover { background: #fff; }
+.step-list li.active { background: #fff; color: var(--primary); border-color: var(--primary); box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.step-list li span { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: var(--border); color: var(--dark); font-size: 12px; font-weight: 700; }
+.step-list li.active span { background: var(--primary); color: #fff; }
+
+.cv-form-area { flex: 1; background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.cv-step { display: none; }
+.cv-step.active { display: block; }
+.cv-step h3 { margin-bottom: 24px; font-size: 22px; font-weight: 700; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.form-group { display: flex; flex-direction: column; gap: 8px; }
+.form-group.full-width { grid-column: span 2; }
+.form-group label { font-size: 14px; font-weight: 600; color: var(--dark); }
+.form-group input, .form-group textarea { padding: 12px 16px; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; font-size: 14px; outline: none; transition: border-color 0.2s; background: var(--light-bg); }
+.form-group input:focus, .form-group textarea:focus { border-color: var(--primary); background: #fff; }
+.cv-actions { display: flex; justify-content: space-between; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border); }
+
+.cv-preview { width: 340px; flex-shrink: 0; }
+.preview-header { display: flex; justify-content: space-between; margin-bottom: 12px; align-items: center; }
+.preview-header h4 { font-size: 14px; font-weight: 700; }
+.preview-paper { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+.preview-profile { display: flex; gap: 16px; align-items: center; margin-bottom: 20px; }
+.preview-avatar { width: 56px; height: 56px; border-radius: 50%; background: #f3f4f6; display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0; }
+.preview-profile h3 { font-size: 18px; font-weight: 700; margin-bottom: 2px; }
+.preview-profile p { font-size: 12px; color: var(--gray); margin-bottom: 2px; }
+.preview-section { margin-top: 20px; }
+.preview-section h4 { font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+.preview-section p { font-size: 13px; margin-bottom: 4px; color: var(--dark); }
+.preview-section .muted { font-size: 12px; color: var(--gray); }
+
+/* --- RESZPONZÍV (Mobil) --- */
+@media (max-width: 1024px) {
+    .main-container, .cv-container { flex-direction: column; }
+    .sidebar, .right-panel, .cv-sidebar, .cv-preview { width: 100%; }
+    .hero { flex-direction: column; text-align: center; padding: 40px 20px; }
+    .search-bar { margin: 0 auto; flex-direction: column; gap: 10px; padding: 12px; }
+    .search-bar input { border-right: none; border-bottom: 1px solid var(--border); padding: 12px 8px; }
+    .search-bar button { width: 100%; }
+    .hero-illustration { display: none; /* Mobilon elrejtjük, hogy ne lógjon ki */ }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-group.full-width { grid-column: span 1; }
+    .nav-links { display: none; } /* Mobilon elrejtjük a menüt, vagy hamburger menü kellene */
+}
+
+/* --- MODAL (Felugró ablak) --- */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(17, 24, 39, 0.7); /* Sötét áttetsző háttér */
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.modal-content {
+    background: #fff;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 600px;
+    padding: 32px;
+    position: relative;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    animation: modalFadeIn 0.2s ease-out;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: var(--gray);
+    cursor: pointer;
+    line-height: 1;
+}
+
+.modal-close:hover { color: var(--primary); }
+
+.modal-header {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal-body h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--dark);
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+}
+
+/* Kártyára kattintás jelzése */
+.job-card {
+    cursor: pointer;
+}

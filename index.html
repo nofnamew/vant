@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V.A.N.T - Találd meg a következő lépést</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Navigáció -->
+    <nav>
+        <div class="logo"><span>V</span>.A.N.T</div>
+        <div class="nav-links">
+            <a href="index.html" class="active">Állások</a>
+            <a href="cv.html">Önéletrajz</a>
+            <a href="kedvencek.html">Kedvencek</a>
+        </div>
+        <div class="nav-actions">
+            <button class="btn-outline">Bejelentkezés</button>
+            <button class="btn-primary">Regisztráció</button>
+        </div>
+    </nav>
+
+    <!-- Hero Szekció -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Találd meg a következő lépést.</h1>
+            <p>Állások, amelyek illenek hozzád — egyszerűen, egy helyen.</p>
+            
+            <div class="search-bar">
+                <input type="text" id="search-keyword" placeholder="Munkakör vagy kulcsszó">
+                <input type="text" id="search-location" placeholder="Város vagy távmunka">
+                <button class="btn-primary" onclick="filterJobs()">Állások keresése</button>
+            </div>
+        </div>
+        <div class="hero-illustration">
+            <!-- Illusztráció helye -->
+            <img src="image_a9f7d7f8.jpg" alt="Illusztráció" style="width:100%; height:100%; ">
+        </div>
+    </header>
+
+    <!-- Fő tartalom -->
+    <main class="main-container">
+        
+        <!-- Bal oldali szűrők -->
+        <aside class="sidebar">
+            <div class="filter-card">
+                <h3>Szűrés</h3>
+                
+                <div class="filter-group">
+                    <h4>Munka típusa</h4>
+                    <label class="checkbox-label"><input type="checkbox" class="filter-type" value="Teljes munkaidő" onchange="filterJobs()"> Teljes munkaidő</label>
+                    <label class="checkbox-label"><input type="checkbox" class="filter-type" value="Részmunkaidő" onchange="filterJobs()"> Részmunkaidő</label>
+                    <label class="checkbox-label"><input type="checkbox" class="filter-type" value="Távmunka" onchange="filterJobs()"> Távmunka</label>
+                </div>
+
+                <div class="filter-group">
+                    <h4>Tapasztalat</h4>
+                    <label class="checkbox-label"><input type="checkbox" class="filter-exp" value="Pályakezdő" onchange="filterJobs()"> Pályakezdő</label>
+                    <label class="checkbox-label"><input type="checkbox" class="filter-exp" value="1-3 év" onchange="filterJobs()"> 1-3 év</label>
+                    <label class="checkbox-label"><input type="checkbox" class="filter-exp" value="3-5 év" onchange="filterJobs()"> 3-5 év</label>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Középső listák -->
+        <section class="jobs-list">
+            <div class="jobs-header">
+                <h2>Ajánlott állások</h2>
+            </div>
+
+            <div id="job-container">
+                <!-- Az állások JavaScriptből generálódnak -->
+            </div>
+        </section>
+
+        <!-- Jobb oldali panel -->
+        <aside class="right-panel">
+            <div class="resume-card">
+                <h3>Még nincs önéletrajzod?</h3>
+                <p>Készíts profi CV-t pár perc alatt.</p>
+                <a href="cv.html" class="btn-primary" style="display:block; text-decoration:none; text-align:center; width: 100%;">Önéletrajz készítése</a>
+
+                <div class="stats">
+                    <h4>Önéletrajzod állapota</h4>
+                    <div class="stat-item"><div class="stat-dot"></div> Személyes adatok</div>
+                    <div class="stat-item"><div class="stat-dot" style="background: var(--gray);"></div> Tapasztalat</div>
+                    <div class="stat-item"><div class="stat-dot" style="background: var(--gray);"></div> Tanulmányok</div>
+                    <div class="stat-item"><div class="stat-dot" style="background: var(--gray);"></div> Készségek</div>
+                </div>
+            </div>
+        </aside>
+
+    </main>
+    <!-- Állás részletei Modal (Felugró ablak) -->
+<div id="job-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeJobModal()">&times;</button>
+        
+        <div class="modal-header">
+            <div class="company-logo" id="modal-logo" style="width: 64px; height: 64px; font-size: 24px;"></div>
+            <div>
+                <h2 id="modal-title" style="margin-bottom: 4px;"></h2>
+                <div id="modal-company" class="company" style="font-size: 16px;"></div>
+            </div>
+        </div>
+
+        <div class="modal-tags" id="modal-tags" style="margin: 20px 0;"></div>
+
+        <div class="modal-body">
+            <h3>Leírás</h3>
+            <p id="modal-description" style="color: var(--gray); margin-bottom: 20px;"></p>
+
+            <h3>Elvárások</h3>
+            <p id="modal-requirements" style="color: var(--gray); margin-bottom: 24px;"></p>
+        </div>
+
+        <div class="modal-footer">
+            <div>
+                <span style="font-size: 14px; color: var(--gray);">Bérsáv:</span>
+                <div id="modal-salary" style="font-size: 20px; font-weight: 700;"></div>
+            </div>
+            <button class="btn-primary" style="padding: 12px 32px; font-size: 16px;" onclick="applyForJob()">Jelentkezem</button>
+        </div>
+    </div>
+</div>
+
+    <!-- 1. Először a Supabase könyvtár (CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- 2. Utána a saját app.js-ed -->
+<script src="app.js"></script>
+</body>
+</html>

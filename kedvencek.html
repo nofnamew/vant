@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V.A.N.T - Kedvencek</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav>
+        <div class="logo"><span>V</span>.A.N.T</div>
+        <div class="nav-links">
+            <a href="index.html">Állások</a>
+            <a href="cv.html">Önéletrajz</a>
+            <a href="kedvencek.html" class="active">Kedvencek</a>
+        </div>
+        <div class="nav-actions">
+            <button class="btn-outline">Bejelentkezés</button>
+            <button class="btn-primary">Regisztráció</button>
+        </div>
+    </nav>
+
+    <main class="main-container" style="justify-content: center;">
+        <section class="jobs-list" style="max-width: 800px;">
+            <div class="jobs-header">
+                <h2>Mentett állásaid</h2>
+            </div>
+
+            <div id="favorites-container">
+                <!-- Ide generálódnak a kedvencek -->
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
